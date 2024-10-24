@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lilytk"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
   { name="Lilith Cybi", email="lilith.cybi@syrency.com" },
 ]
@@ -28,7 +28,7 @@ Homepage = "https://github.com/jmeaster30/lilytk"
 Issues = "https://github.com/jmeaster30/lilytk/issues"
 
 [bumpver]
-current_version = "0.0.1"
+current_version = "0.1.0"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "Bump version {old_version} to {new_version}"
 tag_message = "{new_version}"
