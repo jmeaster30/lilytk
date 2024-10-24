@@ -28,8 +28,8 @@ Homepage = "https://github.com/jmeaster30/lilytk"
 Issues = "https://github.com/jmeaster30/lilytk/issues"
 
 [bumpver]
-current_version = "2024.10.24"
-version_pattern = "YYYY.MM.DD"
+current_version = "0.0.1"
+version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "Bump version {old_version} to {new_version}"
 tag_message = "{new_version}"
 tag_scope = "default"
@@ -39,8 +39,8 @@ push = true
 
 [bumpver.file_patterns]
 "lilytk/__init__.py" = [
-  '^__version__ = "{version}"$',
+  '__version__ = "{version}"'
 ]
 "lilytk/*.py" = [
-  "Copyright (C) 2024-{YYYY} Lilith Cybi - All Rights Reserved."
+  "Copyright (C) 2024-YYYY Lilith Cybi - All Rights Reserved."
 ]
