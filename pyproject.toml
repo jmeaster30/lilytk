@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lilytk"
-dynamic = ["version"]
+version = "0.0.1"
 authors = [
   { name="Lilith Cybi", email="lilith.cybi@syrency.com" },
 ]
@@ -38,8 +38,8 @@ tag = true
 push = true
 
 [bumpver.file_patterns]
-"lilytk/__init__.py" = [
-  '__version__ = "{version}"'
+"pyproject.toml" = [
+  'version = "{version}"'
 ]
 "lilytk/*.py" = [
   "Copyright (C) 2024-YYYY Lilith Cybi - All Rights Reserved."
