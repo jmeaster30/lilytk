@@ -12,26 +12,36 @@ help :
 	@echo "upload-package      - builds and uploads the package to PyPi"
 	@echo "upload-test-package - builds and uploads the package to Test PyPi"
 
-bump-major :
-	bumpver update -n --verbose --major
+bump-major : clean dist/*
+	@echo "Bumping major version..."
+	@bumpver update -n --verbose --major
+	@echo "Done :O"
 
-bump-minor :
-	bumpver update -n --verbose --minor
+bump-minor : clean dist/*
+	@echo "Bumping minor version..."
+	@bumpver update -n --verbose --minor
+	@echo "Done :O"
 
-bump-patch :
-	bumpver update -n --verbose --patch
+bump-patch : clean dist/*
+	@echo "Bumping patch version..."
+	@bumpver update -n --verbose --patch
+	@echo "Done :O"
 
 clean :
-	rm -rf dist
+	@echo "Cleaning..."
+	@rm -rf dist
+	@echo "Done!!"
 
 dist/* :
-	python3 -m build
+	@echo "Building package..."
+	@python3 -m build
+	@echo "Done uwu"
 
 install : dist/*
-	pip install --force-reinstall dist/lilytk-*.whl
+	@pip install --force-reinstall dist/lilytk-*.whl
 
 upload-package : dist/*
-	twine upload --repository pypi dist/*
+	@twine upload --repository pypi dist/*
 
 upload-test-package : dist/*
-	twine upload --repository testpypi dist/*
+	@twine upload --repository testpypi dist/*
