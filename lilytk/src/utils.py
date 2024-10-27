@@ -8,7 +8,14 @@ this file. If not, please write to: lilith.cybi@syrency.com,
 or visit: https://github.com/jmeaster30/lilytk/LICENSE
 '''
 
-from .src.widgets.scrollable_frame import ScrollableFrame
-from .src.capabilities.scrollable import Scrollable, MouseScrollEvent
-from .src import typing
-from .src import utils
+from typing import Any, Callable
+
+
+EMPTY_HANDLER = lambda event: None
+
+def debug_handler(handler: Callable[..., None]) -> Callable[..., None]:
+  def internal(*args, **kwargs):
+    print(f'ARGS: {args}')
+    print(f'KWARGS: {kwargs}')
+    handler(*args, *kwargs)
+  return internal

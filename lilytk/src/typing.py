@@ -8,7 +8,9 @@ this file. If not, please write to: lilith.cybi@syrency.com,
 or visit: https://github.com/jmeaster30/lilytk/LICENSE
 '''
 
-from .src.widgets.scrollable_frame import ScrollableFrame
-from .src.capabilities.scrollable import Scrollable, MouseScrollEvent
-from .src import typing
-from .src import utils
+import tkinter as tk
+from typing import Callable, Literal
+
+
+Orientation = Literal['both', 'horizontal', 'vertical']
+TkEventHandler = Callable[[tk.Event], None]
