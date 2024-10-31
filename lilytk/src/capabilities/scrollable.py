@@ -32,7 +32,7 @@ class Scrollable:
   Capability for responding to mouse scroll events
   '''
 
-  def __init__(self, target: Optional[tk.BaseWidget] = None, bind_all: bool = True, bind_enter_leave: bool = True, orient: Orientation = tk.VERTICAL, scrolling_factor: int = 120, *args, **kw):
+  def __init__(self, target: Optional[tk.BaseWidget] = None, bind_all: bool = True, bind_enter_leave: bool = True, orient: Orientation = tk.VERTICAL, scrolling_factor: int = 120):
     self.target = target if target is not None else self
     self.__mouse_scroll_vertical_binding_0: Optional[str] = None
     self.__mouse_scroll_vertical_binding_1: Optional[str] = None

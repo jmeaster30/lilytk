@@ -4,6 +4,14 @@ Tkinter components that I wanted to make :3
 ## Installing
 This can be installed like any other PyPi package `pip install lilytk`
 
+## Capabilities
+
+### Highlightable
+Adds functions that let the widget be highlighted and unhighlighted with configurable highlight color, highlight width, blink duration, blink delay.
+
+### Scrollable
+Automatically sets up platform independent mouse scroll events on the widget.
+
 ## Components
 Here are all the components I have implemented and a brief description
 

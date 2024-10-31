@@ -10,5 +10,6 @@ or visit: https://github.com/jmeaster30/lilytk/LICENSE
 
 from .src.widgets.scrollable_frame import ScrollableFrame
 from .src.capabilities.scrollable import Scrollable, MouseScrollEvent
+from .src.capabilities.highlightable import Highlightable
 from .src import typing
 from .src import utils
