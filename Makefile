@@ -12,17 +12,17 @@ help :
 	@echo "upload-package      - builds and uploads the package to PyPi"
 	@echo "upload-test-package - builds and uploads the package to Test PyPi"
 
-bump-major : clean dist/*
+bump-major : 
 	@echo "Bumping major version..."
 	@bumpver update -n --verbose --major
 	@echo "Done :O"
 
-bump-minor : clean dist/*
+bump-minor : 
 	@echo "Bumping minor version..."
 	@bumpver update -n --verbose --minor
 	@echo "Done :O"
 
-bump-patch : clean dist/*
+bump-patch : 
 	@echo "Bumping patch version..."
 	@bumpver update -n --verbose --patch
 	@echo "Done :O"
@@ -41,8 +41,8 @@ dist/* :
 install : dist/*
 	@pip install --force-reinstall dist/lilytk-*.whl
 
-upload-package : dist/*
+upload-package : clean dist/*
 	@twine upload --repository pypi dist/*
 
-upload-test-package : dist/*
+upload-test-package : clean dist/*
 	@twine upload --repository testpypi dist/*
