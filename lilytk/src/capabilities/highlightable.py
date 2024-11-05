@@ -40,6 +40,10 @@ class Highlightable:
     self.blink_on = False
     self.__internal_unhighlight()
 
+  '''
+  Internal helpers :3
+  '''
+
   def __internal_do_blinking(self):
     if not self.is_blinking:
       return

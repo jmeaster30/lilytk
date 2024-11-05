@@ -30,7 +30,7 @@ bump-patch : clean dist/*
 clean :
 	@echo "Cleaning..."
 	@rm -rf dist
-	echo "@find . -path '**/__pycache__' -exec rm -rf {} \;"
+	@find . -path '**/__pycache__' -exec rm -rf {} \;
 	@echo "Done!!"
 
 dist/* :

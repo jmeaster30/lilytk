@@ -13,7 +13,7 @@ import tkinter as tk
 from typing import Callable, Literal, Optional
 
 from lilytk.src.typing import Orientation, TkEventHandler
-from lilytk.src.utils import EMPTY_HANDLER, debug_handler
+from lilytk.src.utils import EMPTY_HANDLER
 
 
 class MouseScrollEvent:
@@ -32,7 +32,7 @@ class Scrollable:
   Capability for responding to mouse scroll events
   '''
 
-  def __init__(self, target: Optional[tk.BaseWidget] = None, bind_all: bool = True, bind_enter_leave: bool = True, orient: Orientation = tk.VERTICAL, scrolling_factor: int = 120):
+  def __init__(self, target: Optional[tk.BaseWidget] = None, bind_all: bool = True, bind_enter_leave: bool = True, orient: Orientation = tk.VERTICAL, scrolling_factor: float = 1.0):
     self.target = target if target is not None else self
     self.__mouse_scroll_vertical_binding_0: Optional[str] = None
     self.__mouse_scroll_vertical_binding_1: Optional[str] = None
@@ -90,13 +90,13 @@ class Scrollable:
   def __bind_vertical_scroll(self, action: MouseScrollEventHandler = EMPTY_HANDLER, bind_all: bool = True, scrolling_factor: int = 120):
     match platform.system():
       case 'Windows':
-        self.__mouse_scroll_vertical_binding_0 = self.__base_event_binding_helper(bind_all, "<Mousewheel>", lambda event: action(MouseScrollEvent(event.x, event.y, -1*(event.delta/scrolling_factor), 'units')))
+        self.__mouse_scroll_vertical_binding_0 = self.__base_event_binding_helper(bind_all, "<Mousewheel>", lambda event: action(MouseScrollEvent(event.x, event.y, -1*(event.delta/120)*scrolling_factor, 'units')))
 
       case 'Darwin':
-        self.__mouse_scroll_vertical_binding_0 = self.__base_event_binding_helper(bind_all, "<Mousewheel>", lambda event: action(MouseScrollEvent(event.x, event.y, event.delta, 'units')))
+        self.__mouse_scroll_vertical_binding_0 = self.__base_event_binding_helper(bind_all, "<Mousewheel>", lambda event: action(MouseScrollEvent(event.x, event.y, event.delta * scrolling_factor, 'units')))
       case 'Linux':
-        self.__mouse_scroll_vertical_binding_0 = self.__base_event_binding_helper(bind_all, "<Button-4>", lambda event: action(MouseScrollEvent(event.x, event.y, 120 / scrolling_factor, 'units')))
-        self.__mouse_scroll_vertical_binding_1 = self.__base_event_binding_helper(bind_all, "<Button-5>", lambda event: action(MouseScrollEvent(event.x, event.y, -120 / scrolling_factor, 'units')))
+        self.__mouse_scroll_vertical_binding_0 = self.__base_event_binding_helper(bind_all, "<Button-4>", lambda event: action(MouseScrollEvent(event.x, event.y, -scrolling_factor, 'units')))
+        self.__mouse_scroll_vertical_binding_1 = self.__base_event_binding_helper(bind_all, "<Button-5>", lambda event: action(MouseScrollEvent(event.x, event.y, scrolling_factor, 'units')))
       case _:
         raise NotImplementedError(f"We don't know how to bind mouse scroll to '{platform.system()}'")
       

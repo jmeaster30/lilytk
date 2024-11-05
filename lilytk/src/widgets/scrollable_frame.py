@@ -71,7 +71,6 @@ class ScrollableFrame(tk.Frame, Scrollable):
     self.canvas.bind('<Configure>', _configure_canvas)
 
   def vertical_scroll(self, event: MouseScrollEvent):
-    print(f'[{event.x, event.y}] scroll {event.delta} {event.what}')
     self.canvas.yview_scroll(int(event.delta), event.what)
 
   def horizontal_scroll(self, event: MouseScrollEvent):
