@@ -12,8 +12,8 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Optional
 
-from lilytk.src.capabilities.scrollable import Scrollable, MouseScrollEvent
-from lilytk.src.typing import Orientation
+from lilytk.capabilities.scrollable import Scrollable, MouseScrollEvent
+from lilytk.typing import Orientation
 
 
 class ScrollableFrame(tk.Frame, Scrollable):

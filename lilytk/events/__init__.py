@@ -7,3 +7,7 @@ You should have received a copy of the MIT license with
 this file. If not, please write to: lilith.cybi@syrency.com, 
 or visit: https://github.com/jmeaster30/lilytk/LICENSE
 '''
+
+from .notify_listen import Notifies, Listens
+
+EMPTY_HANDLER = lambda event: None
