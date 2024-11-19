@@ -11,15 +11,16 @@ or visit: https://github.com/jmeaster30/lilytk/LICENSE
 from typing import Any, Callable
 from lilytk.utils.singleton import Singleton
 
+# ?? This would be LEAGUES better IMO if the events were type-checked better but this is python so IDK how easy that would be
 
-def Notifies(event_name):
+def Notifies(event_name: str):
   def NotifyDecorator(func):
     def wrapper(*args, **kwargs):
       NotifyListenerManager().notify(event_name, func(*args, **kwargs))
     return wrapper
   return NotifyDecorator
 
-def Listens(event_name):
+def Listens(event_name: str):
   def ListensDecorator(func):
     NotifyListenerManager().register(event_name, func)
     def wrapper(*args, **kwargs):
@@ -27,17 +28,33 @@ def Listens(event_name):
     return wrapper
   return ListensDecorator
 
+def ClassListens(event_name: str, *listener_names: tuple[str, ...]):
+  def ClassListensDecorator(cls):
+    def get_instance(*args, **kwargs):
+      instance = cls(*args, *kwargs)
+      for listener_name in listener_names:
+        listener_attr = getattr(instance, listener_name, None)
+        if listener_attr is None:
+          raise ValueError(f"Method '{listener_name}' does not exist on class '{instance.__class__.__name__}'.")
+        if not callable(listener_attr):
+          raise ValueError(f"Method '{listener_name}' of class '{instance.__class__.__name__}' is not callable.")
+        
+        NotifyListenerManager().register(event_name, listener_attr)
+      return instance
+    return get_instance
+  return ClassListensDecorator
+
 @Singleton
 class NotifyListenerManager:
   def __init__(self):
-    self.events_to_listeners: dict[str, list[Callable[[Any], None]]] = {}
+    self.events_to_listeners: dict[str, list[Callable[..., None]]] = {}
   
   def notify(self, event_name: str, data: Any):
     if event_name in self.events_to_listeners:
       for listener in self.events_to_listeners[event_name]:
         listener(data)
 
-  def register(self, event_name: str, listener: Callable[[Any], None]):
+  def register(self, event_name: str, listener: Callable[..., None]):
     if event_name not in self.events_to_listeners:
       self.events_to_listeners[event_name] = [listener]
     elif event_name in self.events_to_listeners and listener not in self.events_to_listeners[event_name]:

@@ -8,6 +8,6 @@ this file. If not, please write to: lilith.cybi@syrency.com,
 or visit: https://github.com/jmeaster30/lilytk/LICENSE
 '''
 
-from .notify_listen import Notifies, Listens
+from .notify_listen import Notifies, Listens, ClassListens
 
 EMPTY_HANDLER = lambda event: None
