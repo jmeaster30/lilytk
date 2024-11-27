@@ -18,7 +18,7 @@ from lilytk.typing import Orientation
 
 class ScrollableFrame(tk.Frame, Scrollable):
   def __init__(self, root: Optional[tk.Misc], orient: Orientation = tk.VERTICAL, *args, **kwargs):
-    self.full_container = tk.Frame(root, *args, *kwargs)
+    self.full_container = tk.Frame(root, *args, **kwargs)
     self.canvas = tk.Canvas(self.full_container)
 
     self.full_container.rowconfigure(0, weight=1)

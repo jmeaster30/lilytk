@@ -16,7 +16,9 @@ from lilytk.utils.singleton import Singleton
 def Notifies(event_name: str):
   def NotifyDecorator(func):
     def wrapper(*args, **kwargs):
-      NotifyListenerManager().notify(event_name, func(*args, **kwargs))
+      result = func(*args, **kwargs)
+      NotifyListenerManager().notify(event_name, result)
+      return result
     return wrapper
   return NotifyDecorator
 
@@ -29,19 +31,20 @@ def Listens(event_name: str):
   return ListensDecorator
 
 def ClassListens(event_name: str, *listener_names: tuple[str, ...]):
-  def ClassListensDecorator(cls):
-    def get_instance(*args, **kwargs):
-      instance = cls(*args, *kwargs)
+  class ClassListensDecorator:
+    def __init__(self, cls):
+      self.cls = cls
+
+    def __call__(self, *args, **kwargs):
+      instance = self.cls(*args, **kwargs)
       for listener_name in listener_names:
         listener_attr = getattr(instance, listener_name, None)
         if listener_attr is None:
           raise ValueError(f"Method '{listener_name}' does not exist on class '{instance.__class__.__name__}'.")
         if not callable(listener_attr):
           raise ValueError(f"Method '{listener_name}' of class '{instance.__class__.__name__}' is not callable.")
-        
         NotifyListenerManager().register(event_name, listener_attr)
       return instance
-    return get_instance
   return ClassListensDecorator
 
 @Singleton
@@ -50,12 +53,22 @@ class NotifyListenerManager:
     self.events_to_listeners: dict[str, list[Callable[..., None]]] = {}
   
   def notify(self, event_name: str, data: Any):
+    #print(f"Notifying '{event_name}'...")
     if event_name in self.events_to_listeners:
       for listener in self.events_to_listeners[event_name]:
         listener(data)
 
   def register(self, event_name: str, listener: Callable[..., None]):
+    #print(f"Registering '{event_name}'...")
     if event_name not in self.events_to_listeners:
       self.events_to_listeners[event_name] = [listener]
     elif event_name in self.events_to_listeners and listener not in self.events_to_listeners[event_name]:
       self.events_to_listeners[event_name].append(listener)
+    #else:
+      #print("WOAH THERE WE DON'T WANT TO DUPLICATE THE LISTENERS")
+
+  # TODO need to get the decorators using this. Like in the class destructors
+  #def deregister(self, event_name: str, listener: Callable[..., None]):
+  #  print(f"Deregistering listener from '{event_name}'...")
+  #  if event_name in self.events_to_listeners:
+  #    self.events_to_listeners[event_name].remove(listener)

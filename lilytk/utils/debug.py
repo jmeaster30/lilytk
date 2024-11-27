@@ -15,5 +15,5 @@ def debug_handler(handler: Callable[..., None]) -> Callable[..., None]:
   def internal(*args, **kwargs):
     print(f'ARGS: {args}')
     print(f'KWARGS: {kwargs}')
-    handler(*args, *kwargs)
+    handler(*args, **kwargs)
   return internal
